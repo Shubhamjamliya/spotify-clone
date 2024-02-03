@@ -19,8 +19,8 @@ function convertSecondsToTime(seconds) {
 async function getSongs(folder) {
     currFolder = folder;
     // let a=await fetch(`http://127.0.0.1:3000/${folder}/`);
-    // let a = await fetch(`./${folder}/`);
-    let a = await fetch(`https://github.com/Shubhamjamliya/spotify-clone/tree/main/songs`);
+    let a = await fetch(`${folder}/`);
+    // let a = await fetch("https://github.com/Shubhamjamliya/spotify-clone/tree/main/songs");
     let response = await a.text();
     let div = document.createElement('div');
     div.innerHTML = response;
@@ -84,7 +84,7 @@ async function displayAlbums() {
         if (e.href.includes("/songs/") && !e.href.includes(".htaccess")) {
             let folder = (e.href.split("/").slice(-2)[0]);
             // Get the metadata of folder
-            let a = await fetch(`/songs/${folder}/info.json`);
+            let a = await fetch(`./songs/${folder}/info.json`);
             let response = await a.json();
             let cardContainer = document.querySelector(".cardContainer");
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
@@ -101,7 +101,7 @@ async function displayAlbums() {
                   </g>
               </svg>
           </div>
-          <img src="/songs/${folder}/cover.jpg">
+          <img src="./songs/${folder}/cover.jpg">
           <h2>${response.title}</h2>
           <p>${response.description}</p>
           </div>`
@@ -171,7 +171,7 @@ async function main() {
     next.addEventListener("click", () => {
         let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0]);
         currentsong.pause;
-        if ((index + 1) < songs.length - 1) {
+        if ((index + 1) <= songs.length - 1) {
             playMusic(songs[index + 1]);
         }
     })
